@@ -1,0 +1,103 @@
+﻿<Window x:Class="ResumePrilozen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ResumePrilozen"
+        mc:Ignorable="d"
+        Title="База резюме" Height="249" Width="800"
+        WindowStartupLocation="CenterScreen" Background="CadetBlue"
+        Foreground="White" ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <local:MainVM/>
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="55*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="0" Margin="5,5,0,49" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+            <!-- ФИО -->
+            <StackPanel Margin="10,5">
+                <TextBlock Text="ФИО:"/>
+                <TextBox Text="{Binding UserNameInput, UpdateSourceTrigger=PropertyChanged}" Width="160"/>
+            </StackPanel>
+
+            <!-- Email -->
+            <StackPanel Margin="10,5">
+                <TextBlock Text="E-mail:"/>
+                <TextBox Text="{Binding UserEmailInput}" Width="160"/>
+            </StackPanel>
+
+            <!-- Возраст -->
+            <StackPanel Margin="10,5">
+                <TextBlock Text="Возраст:"/>
+                <TextBox Text="{Binding UserAgeInput, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
+            </StackPanel>
+
+
+            <!-- Адрес -->
+            <StackPanel Margin="10,5">
+                <TextBlock Text="Адрес:"/>
+                <TextBox Text="{Binding UserAddressInput}" Width="160"/>
+            </StackPanel>
+
+            <!-- Статус -->
+            <StackPanel Margin="10,5">
+                <TextBlock Text="Статус:"/>
+                <ComboBox ItemsSource="{Binding MaritalStatuses}"
+              SelectedItem="{Binding ChosenMaritalStatus}"
+              Width="120"/>
+            </StackPanel>
+        </WrapPanel>
+
+        <DockPanel LastChildFill="False" Margin="5,63,5,4" Background="Aqua" Grid.ColumnSpan="2">
+            <WrapPanel Margin="5,5,5,5" Orientation="Horizontal">
+                <CheckBox Content="CSharp"   IsChecked="{Binding SkillCSharp}"   Margin="8,5"/>
+                <CheckBox Content="Java"     IsChecked="{Binding SkillJava}"     Margin="8,5"/>
+                <CheckBox Content="Python"   IsChecked="{Binding SkillPython}"   Margin="8,5"/>
+                <CheckBox Content="SQL"      IsChecked="{Binding SkillSql}"      Margin="8,5"/>
+                <CheckBox Content="HTML"     IsChecked="{Binding SkillHtml}"     Margin="8,5"/>
+                <CheckBox Content="CSS"      IsChecked="{Binding SkillCss}"      Margin="8,5"/>
+                <CheckBox Content="Git"      IsChecked="{Binding SkillGit}"      Margin="8,5"/>
+                <CheckBox Content="Docker"   IsChecked="{Binding SkillDocker}"   Margin="8,5"/>
+                <CheckBox Content="Scrum"    IsChecked="{Binding SkillScrum}"    Margin="8,5"/>
+                <CheckBox Content="English"  IsChecked="{Binding SkillEnglish}"  Margin="8,5"/>
+            </WrapPanel>
+        </DockPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,6,0,34" HorizontalAlignment="Left">
+            <Button Content="Добавить" Width="90" Margin="5"
+                    Command="{Binding AddResumeCmd}"
+                    Background="Green" Foreground="Black" FontWeight="Bold"/>
+
+            <Button Content="Удалить" Width="90" Margin="5"
+                    Command="{Binding DeleteSelectedCmd}"
+                    Background="Red" Foreground="Black" FontWeight="Bold"/>
+            <Button Content="Отмена" Width="90" Margin="5"
+                    Command="{Binding ClearInputsCmd}"
+                    Background="DarkSalmon" Foreground="Black" FontWeight="Bold"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,46,0,5" HorizontalAlignment="Left" Grid.RowSpan="3">
+            <ComboBox Width="340" Margin="5"
+                      ItemsSource="{Binding AllResumes}"
+                      SelectedItem="{Binding SelectedResume}"
+                      DisplayMemberPath="UserFullName"/>
+
+            <Button Content="Просмотр"
+                    Width="100" Margin="5"
+                    Command="{Binding ShowResumeCmd}" />
+        </StackPanel>
+    </Grid>
+</Window>
